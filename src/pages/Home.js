@@ -1,9 +1,10 @@
 import React from "react";
+import MainSection from "../components/MainSection";
 
 function Home() {
   return (
     <>
-      <h1>Yoooo</h1>
+      <MainSection />
       {/* <MainSection />
       <IncludingMembersSection />
       <CommunitySection />

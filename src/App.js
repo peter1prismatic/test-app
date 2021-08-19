@@ -25,7 +25,7 @@ const theme = createTheme({
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme} injectFirst>
       <div className="App">
         <Router>
           <Navbar />
