@@ -1,0 +1,29 @@
+.menu-5 {
+  /* background-color: aqua; */
+  display: flex;
+}
+
+.menu-5 Button {
+  margin-left: 20px;
+}
+
+.ul-menu {
+  list-style-type: none;
+  display: flex;
+  /* margin-right: 20px; */
+}
+
+.ul-menu li {
+  padding-right: 20px;
+  color: white;
+}
+
+.ul-menu li:hover {
+  cursor: pointer;
+}
+
+@media screen and (max-width: 960px) {
+  .menu-5 {
+    display: none;
+  }
+}

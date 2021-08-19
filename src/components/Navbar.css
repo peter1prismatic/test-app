@@ -1,0 +1,36 @@
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #0a0656;
+  padding: 0 3%;
+  height: 85px;
+}
+
+.navbar-container .menu-3 {
+  background-color: aqua;
+}
+
+.prismatic-logo {
+  height: 42px;
+  width: 230px;
+}
+
+.mobile-menu-2 {
+  background-color: aqua;
+}
+
+.menu-3 {
+  color: white;
+}
+
+@media screen and (max-width: 960px) {
+  .mobile-menu-2 {
+    display: flex;
+  }
+
+  .menu-3 {
+    display: none;
+    color: white;
+  }
+}
