@@ -2,11 +2,12 @@ import React from "react";
 import { MobileMenu } from "./MobileMenu";
 import { Link } from "react-router-dom";
 import { Menu } from "./Menu";
+import { LoggedInMenu } from "./LoggedInMenu";
 // import logo from "/prismatic/Prismatic FINAL LOGO-3.png";
 
 import "./Navbar.css";
 
-export const Navbar = () => {
+export const LoggedInNav = () => {
   return (
     <div className="navbar-container">
       <Link to="/" className="navbar-logo">
@@ -17,7 +18,7 @@ export const Navbar = () => {
         />
       </Link>
       <MobileMenu className="mobile-menu-2" />
-      <Menu className="menu-3" />
+      <LoggedInMenu className="menu-3" />
     </div>
   );
 };

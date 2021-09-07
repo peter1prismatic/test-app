@@ -1,7 +1,10 @@
 import React from "react";
 import { Button } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 import "./Menu.css";
+import LoginModal from "./LoginModal";
+import RegisterModal from "./RegisterModal";
 
 export const Menu = () => {
   return (
@@ -11,12 +14,16 @@ export const Menu = () => {
         <li>Community</li>
         <li>Services</li>
       </ul>
-      <Button variant="contained" color="secondary">
-        Log in
-      </Button>
-      <Button variant="contained" color="primary">
-        Request Access
-      </Button>
+      {/* <Link to="/login" className="login-link">
+        <Button variant="contained" color="secondary" className="login-btn">
+          Log in
+        </Button>
+      </Link> */}
+
+      <span style={{ padding: "10px" }}>
+        <LoginModal />
+      </span>
+      <RegisterModal />
     </div>
   );
 };
