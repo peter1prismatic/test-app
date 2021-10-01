@@ -12,11 +12,16 @@ import axios from "axios";
 import Typography from "@material-ui/core/Typography";
 import { Spinner } from "./lib";
 
+import { useDispatch } from "react-redux";
+
+import { setUser } from "../store/userSlice";
+
 export default function LoginModal() {
   const [open, setOpen] = React.useState(false);
+  const dispatch = useDispatch();
   const emailRef = useRef();
   const passwordRef = useRef();
-  const { login } = useAuth();
+  const { login, token } = useAuth();
   const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -55,6 +60,23 @@ export default function LoginModal() {
     }
     setStatus("success");
   }
+
+  // async function setUser() {
+  //   console.log("config...");
+  //   console.log(config);
+  //   axios
+  //     .get(`${process.env.REACT_APP_BASE_URL}/user`, config)
+  //     .then((res) => {
+  //       console.log("got the user");
+  //       console.log(res.data);
+  //       console.log("image Url");
+  //       console.log(res.data.credentials.imageUrl);
+  //       console.log("dispatching...");
+  //       dispatch(setUser(res.payload));
+  //       // setImageUrl(res.data.credentials.imageUrl);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }
 
   // axios
   //   .post(`${process.env.REACT_APP_BASE_URL}/login`, { email, password })

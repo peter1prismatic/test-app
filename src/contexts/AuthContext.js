@@ -19,6 +19,13 @@ export function AuthProvider({ children }) {
   function login(email, password) {
     console.log("login attempt");
     return auth.signInWithEmailAndPassword(email, password);
+    // .then((data) => {
+    //   data.user.getIdToken().then(function (idToken) {
+    //     console.log("23");
+    //     setToken(idToken);
+    //     console.log("25");
+    //   });
+    // });
   }
 
   function logout() {
@@ -62,6 +69,15 @@ export function AuthProvider({ children }) {
 
     return unsubscribe;
   }, []);
+
+  // useEffect(() => {
+  //   const unsubscribe = auth.onAuthStateChanged((user) => {
+  //     setCurrentUser(user);
+  //     setLoading(false);
+  //   });
+
+  //   return unsubscribe;
+  // }, []);
 
   const value = {
     currentUser,
