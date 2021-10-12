@@ -1,0 +1,19 @@
+.discover-container {
+  margin-top: 120px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.fund-container {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-logo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+}

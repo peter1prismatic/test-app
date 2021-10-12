@@ -1,41 +1,31 @@
-import React, { useState } from "react";
-// import { Button } from "@material-ui/core";
+import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Button } from "./lib";
 
-import "./Menu.css";
-import LoginModal from "./LoginModal";
-import RegisterModal from "./RegisterModal";
 import { useAuth } from "../contexts/AuthContext";
+import "./LoggedInMenu.css";
 
 export const LoggedInMenu = () => {
-  const [error, setError] = useState("");
   const { currentUser, logout } = useAuth();
   const history = useHistory();
 
   async function handleLogout() {
-    setError("");
-
     try {
       await logout();
       history.push("/");
     } catch {
-      setError("Failed to log out");
+      console.log("Failed to log out");
     }
   }
 
   return (
     <div className="menu-5">
-      <ul className="ul-menu">
-        <li className="menu-6">About us</li>
-        <li>Community</li>
-        <li>Services</li>
-      </ul>
-      {/* <Link to="/login" className="login-link">
-        <Button variant="contained" color="secondary" className="login-btn">
-          Log in
-        </Button>
-      </Link> */}
+      <Link to="/discover" className="login-link">
+        <button className="login-btn">Discover</button>
+      </Link>
+      <Link to="/my-profile" className="login-link">
+        <button className="login-btn">My Profile</button>
+      </Link>
 
       <div
         className="logged-in-div"

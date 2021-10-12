@@ -10,15 +10,10 @@ export const Menu = () => {
   return (
     <div className="menu-5">
       <ul className="ul-menu">
-        <li className="menu-6">About us</li>
+        <li>About us</li>
         <li>Community</li>
         <li>Services</li>
       </ul>
-      {/* <Link to="/login" className="login-link">
-        <Button variant="contained" color="secondary" className="login-btn">
-          Log in
-        </Button>
-      </Link> */}
 
       <span style={{ padding: "10px" }}>
         <LoginModal />

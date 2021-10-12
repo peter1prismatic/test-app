@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import "../../App.css";
-// import { Button } from "../Button";
 import { Button, TextField } from "@material-ui/core";
 import "./MainSection.css";
 
@@ -58,24 +56,6 @@ function MainSection() {
           </div>
         )}
       </div>
-
-      {/* <div className="hero-btns">
-        <Button
-          className="btns"
-          buttonStyle="btn--outline"
-          buttonSize="btn--large"
-        >
-          GET STARTED
-        </Button>
-        <Button
-          className="btns"
-          buttonStyle="btn--primary"
-          buttonSize="btn--large"
-          onClick={console.log("hey")}
-        >
-          WATCH TRAILER <i className="far fa-play-circle" />
-        </Button>
-      </div> */}
     </div>
   );
 }

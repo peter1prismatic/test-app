@@ -1,0 +1,10 @@
+.docsend-links-container {
+  display: flex;
+  align-items: center;
+  margin: 10px;
+}
+
+p {
+  margin: 0;
+  margin-right: 5px;
+}

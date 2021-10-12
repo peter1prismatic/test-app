@@ -55,9 +55,10 @@ export default function RegisterModal() {
         .then((res) => {
           console.log(res.data);
 
-          history.push("/create-profile");
+          history.push("/my-profile");
         })
         .catch((err) => {
+          console.log(err.message);
           setError(err.message);
           setStatus("error");
         });

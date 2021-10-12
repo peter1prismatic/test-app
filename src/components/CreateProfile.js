@@ -2,13 +2,19 @@ import React, { useState, useEffect, useMemo } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import MyButton from "../utils/MyButton";
 import EditIcon from "@material-ui/icons/Edit";
+import LockIcon from "@material-ui/icons/Lock";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { setUser } from "../store/userSlice";
 import { Button } from "./lib";
 import "./CreateProfile.css";
+import Form from "./Todo/Form";
+import TodoApp from "./Todo/TodoApp";
+import DocSend from "./DocSend";
+import { useParams } from "react-router-dom";
 
 export default function CreateProfile() {
+  let { firmName } = useParams();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   console.log("User from redux: ");
@@ -17,6 +23,7 @@ export default function CreateProfile() {
   const [videoNum, setVideoNum] = useState(1);
   const [videoUrl, setVideoUrl] = useState();
   const [logoUrl, setLogoUrl] = useState();
+  const [todos, setTodos] = useState();
 
   const { token } = useAuth();
 
@@ -44,6 +51,7 @@ export default function CreateProfile() {
         dispatch(setUser(res.data));
         setVideoUrl(res.data.credentials.videoUrl1);
         setLogoUrl(res.data.credentials.logo);
+        setTodos(res.data.todos);
       })
       .catch((err) => console.log(err));
   }, [config, dispatch, user.credentials.videoUrl1]);
@@ -57,7 +65,6 @@ export default function CreateProfile() {
         console.log("got the user");
         console.log(res.data);
         console.log("dispatching...");
-        // setVideoUrl(res.data.credentials.imageUrl);
 
         setLogoUrl(res.data.credentials.logo);
         dispatch(setUser(res.data));
@@ -183,6 +190,9 @@ export default function CreateProfile() {
         setVideoUrl(user.credentials.videoUrl5);
         setVideoNum(5);
         break;
+      case 6:
+        setVideoNum(6);
+        break;
       default:
         setVideoUrl(user.credentials.videoUrl1);
         setVideoNum(1);
@@ -204,13 +214,6 @@ export default function CreateProfile() {
           hidden="hidden"
           onChange={handleLogoChange}
         />
-        {/* <MyButton
-          tip="Edit logo"
-          onClick={handleEditLogo}
-          btnClassName="button"
-        >
-          <EditIcon color="primary" />
-        </MyButton> */}
         <h2>PK CAPITAL</h2>
       </div>
 
@@ -256,36 +259,49 @@ export default function CreateProfile() {
             >
               Special Topic
             </button>
+            <div style={{ fontSize: 30, fontWeight: 200 }}> | </div>
+            <button
+              style={{ fontWeight: videoNum === 6 ? 700 : "normal" }}
+              className="button-tabs"
+              onClick={() => handleButtonClick(6)}
+            >
+              Request more material
+            </button>
+            {/* <LockIcon /> */}
           </div>
           <div className="image-wrapper">
-            <div className="inner-video-container">
-              <video
-                className="video-component"
-                src={videoUrl}
-                controls
-              ></video>
-              <div className="edit-button2">
-                <input
-                  type="file"
-                  id="videoInput"
-                  hidden="hidden"
-                  onChange={handleVideoChange}
-                />
-                <MyButton
-                  tip="Edit video"
-                  onClick={handleEditVideo}
-                  btnClassName="button"
+            {videoNum === 6 ? (
+              <DocSend />
+            ) : (
+              <div className="inner-inner-video-container">
+                <video
+                  className="video-component"
+                  src={videoUrl}
+                  controls
+                ></video>
+                <div className="edit-button2">
+                  <input
+                    type="file"
+                    id="videoInput"
+                    hidden="hidden"
+                    onChange={handleVideoChange}
+                  />
+                  <MyButton
+                    tip="Edit video"
+                    onClick={handleEditVideo}
+                    btnClassName="button"
 
-                  // style={{ width: 20, height: 20 }}
-                >
-                  <EditIcon color="primary" />
-                </MyButton>
+                    // style={{ width: 20, height: 20 }}
+                  >
+                    <EditIcon color="primary" />
+                  </MyButton>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
 
-        <div className="transcript-container">
+        {/* <div className="transcript-container">
           <div className="fake-30"></div>
           <div className="transcript-section">
             <h3>Transcript</h3>
@@ -302,7 +318,7 @@ export default function CreateProfile() {
               enim.
             </p>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div className="profile-body">

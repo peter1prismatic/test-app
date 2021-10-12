@@ -1,15 +1,6 @@
 .menu-5 {
-  /* background-color: aqua; */
   display: flex;
   align-items: center;
-  /* margin-bottom: 0; */
-}
-
-.menu-5 Button {
-  /* margin-left: 20px; */
-  /* display: flex; */
-
-  /* width: 165px; */
 }
 
 .ul-menu {
@@ -17,8 +8,6 @@
   display: flex;
   align-items: center;
   margin-bottom: 0;
-
-  /* margin-right: 20px; */
 }
 
 .ul-menu li {

@@ -6,7 +6,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import axios from "axios";
 import Typography from "@material-ui/core/Typography";
@@ -52,7 +52,7 @@ export default function LoginModal() {
       await login(email, password);
       console.log("hellooooo2");
 
-      history.push("/create-profile");
+      history.push("/test-route");
     } catch (err) {
       console.log(err.message);
       setError(err.message);

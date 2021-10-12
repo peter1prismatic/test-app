@@ -2,7 +2,6 @@ import React from "react";
 import { MobileMenu } from "./MobileMenu";
 import { Link } from "react-router-dom";
 import { Menu } from "./Menu";
-// import logo from "/prismatic/Prismatic FINAL LOGO-3.png";
 
 import "./Navbar.css";
 

@@ -1,87 +1,49 @@
-/** @jsxImportSource @emotion/react */
+import React, { useState, useMemo, useEffect } from "react";
+import { useAuth } from "../contexts/AuthContext";
 
-import * as React from "react";
-import Tooltip from "@reach/tooltip";
-import { FaSearch, FaTimes } from "react-icons/fa";
-import { Input, BookListUL, Spinner } from "./lib";
-import { BookRow } from "./book-row";
-import { client } from "../utils/api-client";
-import * as colors from "../styles/colors";
-import { useAsync } from "../utils/hooks";
+import axios from "axios";
+import "./Discover.css";
 
-function DiscoverBooksScreen() {
-  const { data, error, run, isLoading, isError, isSuccess } = useAsync();
-  const [query, setQuery] = React.useState();
-  const [queried, setQueried] = React.useState(false);
+export default function Discover() {
+  const { token } = useAuth();
 
-  React.useEffect(() => {
-    if (!queried) {
-      return;
-    }
-    run(client(`books?query=${encodeURIComponent(query)}`));
-  }, [query, queried, run]);
+  const [profiles, setProfiles] = useState([]);
 
-  function handleSearchSubmit(event) {
-    event.preventDefault();
-    setQueried(true);
-    setQuery(event.target.elements.search.value);
-  }
+  const bearerToken = `Bearer ${token}`;
+
+  const config = useMemo(() => {
+    return {
+      headers: {
+        Authorization: bearerToken,
+        "Content-Type": "multipart/form-data",
+      },
+    };
+  }, [bearerToken]);
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_BASE_URL}/profiles`, config)
+      .then((res) => {
+        console.log("got the user");
+        console.log(res.data);
+        console.log("dispatching...");
+
+        const managerProfiles = res.data.filter((profile) => profile.isManager);
+        setProfiles(managerProfiles);
+      })
+      .catch((err) => console.log(err));
+  }, [config]);
 
   return (
-    <div
-      css={{ maxWidth: 800, margin: "auto", width: "90vw", padding: "40px 0" }}
-    >
-      <form onSubmit={handleSearchSubmit}>
-        <Input
-          placeholder="Search books..."
-          id="search"
-          css={{ width: "100%" }}
-        />
-        <Tooltip label="Search Books">
-          <label htmlFor="search">
-            <button
-              type="submit"
-              css={{
-                border: "0",
-                position: "relative",
-                marginLeft: "-35px",
-                background: "transparent",
-              }}
-            >
-              {isLoading ? (
-                <Spinner />
-              ) : isError ? (
-                <FaTimes aria-label="error" css={{ color: colors.danger }} />
-              ) : (
-                <FaSearch aria-label="search" />
-              )}
-            </button>
-          </label>
-        </Tooltip>
-      </form>
-
-      {isError ? (
-        <div css={{ color: colors.danger }}>
-          <p>There was an error:</p>
-          <pre>{error.message}</pre>
-        </div>
-      ) : null}
-
-      {isSuccess ? (
-        data?.books?.length ? (
-          <BookListUL css={{ marginTop: 20 }}>
-            {data.books.map((book) => (
-              <li key={book.id} aria-label={book.title}>
-                <BookRow key={book.id} book={book} />
-              </li>
-            ))}
-          </BookListUL>
-        ) : (
-          <p>No books found. Try another search.</p>
-        )
-      ) : null}
+    <div className="discover-container">
+      {profiles.map((item) => {
+        return (
+          <div className="fund-container">
+            <img className="profile-logo" src={item.logo} alt="" />{" "}
+            <div className="fund-name">{item.firmName}</div>
+          </div>
+        );
+      })}
     </div>
   );
 }
-
-export { DiscoverBooksScreen };
