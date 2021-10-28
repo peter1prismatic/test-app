@@ -4,10 +4,9 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 
 import { NotFoundScreen } from "../screens/not-found";
-import CreateProfile from "../components/CreateProfile";
+import CreateProfile from "./CreateProfile";
 import { useAuth } from "../contexts/AuthContext";
 import { LoggedInNav } from "./LoggedInNav";
-// import Discover from "../components/Discover";
 import Discover from "./Discover";
 import TestComponent from "./TestComponent";
 import CheckUser from "./CheckUser";
