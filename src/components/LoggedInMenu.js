@@ -20,12 +20,16 @@ export const LoggedInMenu = () => {
 
   return (
     <div className="menu-5">
-      <Link to="/discover" className="login-link">
-        <button className="login-btn">Discover</button>
-      </Link>
-      <Link to="/my-profile" className="login-link">
-        <button className="login-btn">My Profile</button>
-      </Link>
+      {!currentUser.isAnonymous && (
+        <>
+          <Link to="/discover" className="login-link">
+            <button className="login-btn">Discover</button>
+          </Link>
+          <Link to="/my-profile" className="login-link">
+            <button className="login-btn">My Profile</button>
+          </Link>
+        </>
+      )}
 
       <div
         className="logged-in-div"
@@ -40,7 +44,9 @@ export const LoggedInMenu = () => {
       >
         <span style={{ padding: "10px" }}>{currentUser.email}</span>
 
-        <Button onClick={handleLogout}>Logout</Button>
+        {!currentUser.isAnonymous && (
+          <Button onClick={handleLogout}>Logout</Button>
+        )}
       </div>
     </div>
   );

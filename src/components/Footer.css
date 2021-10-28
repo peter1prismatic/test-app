@@ -1,0 +1,12 @@
+.footer-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  background-color: #0a0656;
+  margin-top: 300px;
+}
+
+.prismatic-footer-logo {
+  height: 40px;
+}

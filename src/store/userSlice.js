@@ -5,32 +5,29 @@ export const userSlice = createSlice({
   initialState: {
     authenticated: false,
     loading: false,
-    credentials: {},
+    credentials: { documents: [] },
     likes: [],
     notifications: [],
     todos: [],
   },
   reducers: {
     setUser: (state, { payload }) => {
-      console.log("set user reducer");
-      // state = payload;
-      state.credentials = payload.credentials;
+      state.credentials = payload;
       state.todos = payload.todos;
     },
     deleteTodoAction: (state, { payload }) => {
-      console.log("delete todo reducer");
-      const index = state.todos.findIndex(
-        (todo) => todo.todoId === payload.todoId
+      const index = state.credentials.documents.findIndex(
+        (doc) => doc === payload
       );
-      state.todos.splice(index, 1);
-      // return {
-      //   ...state,
-      // };
+      state.credentials.documents.splice(index, 1);
+    },
+    addDocument: (state, { payload }) => {
+      state.credentials.documents.push(payload);
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setUser, deleteTodoAction } = userSlice.actions;
+export const { setUser, deleteTodoAction, addDocument } = userSlice.actions;
 
 export default userSlice.reducer;

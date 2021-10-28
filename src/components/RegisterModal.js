@@ -20,6 +20,8 @@ export default function RegisterModal() {
   const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [firmName, setFirmName] = useState("");
   const [error, setError] = useState();
   const [status, setStatus] = useState("idle");
 
@@ -43,19 +45,20 @@ export default function RegisterModal() {
     try {
       setError();
       setStatus("loading");
-      console.log("hellooooo");
 
       await signup(email, password);
-      console.log("hellooooo2");
+
       axios
         .post(`${process.env.REACT_APP_BASE_URL}/signup`, {
           email,
           password,
+          confirmPassword,
+          firmName,
         })
         .then((res) => {
           console.log(res.data);
 
-          history.push("/my-profile");
+          history.push("/fetching");
         })
         .catch((err) => {
           console.log(err.message);
@@ -69,23 +72,6 @@ export default function RegisterModal() {
     }
     setStatus("success");
   }
-
-  // axios
-  //   .post(`${process.env.REACT_APP_BASE_URL}/signup`, {
-  //     email,
-  //     password,
-  //   })
-  //   .then((res) => {
-  //     console.log(res.data);
-  //     setStatus("success");
-  //     setOpen(false);
-  //     history.push("/create-profile");
-  //   })
-  //   .catch((err) => {
-  //     setErrors(err.response.data);
-  //     setStatus("error");
-  //   });
-  // }
 
   return (
     <div>
@@ -114,6 +100,22 @@ export default function RegisterModal() {
             label="Password"
             type="password"
             onChange={(e) => setPassword(e.target.value)}
+            fullWidth
+          />
+          <TextField
+            margin="dense"
+            id="confirmPassword"
+            label="Confirm Password"
+            type="password"
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            fullWidth
+          />
+          <TextField
+            margin="dense"
+            id="firmName"
+            label="Firm Name"
+            type="text"
+            onChange={(e) => setFirmName(e.target.value)}
             fullWidth
           />
         </DialogContent>

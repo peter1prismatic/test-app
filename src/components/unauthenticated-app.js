@@ -11,6 +11,7 @@ import LoginModal from "./LoginModal";
 import { Switch, Route, Redirect } from "react-router-dom";
 import User from "../pages/User";
 import StaticProfile from "./Profile/StaticProfile";
+import EnterEmailPage from "./EnterEmailPage";
 
 function UnauthenticatedApp() {
   console.log("unauthenticated app");
@@ -19,8 +20,9 @@ function UnauthenticatedApp() {
       <Navbar />
 
       <Switch>
-        <Route path="/user/:firmName">
-          <StaticProfile />
+        <Route path="/user/:firmNameUrl">
+          <EnterEmailPage />
+          {/* <StaticProfile /> */}
         </Route>
         <Route exact path="/users/:handle" component={User} />
         <Route exact path="/">

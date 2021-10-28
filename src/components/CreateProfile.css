@@ -17,6 +17,18 @@ video {
   max-height: 100%;
 }
 
+.upload-video {
+  width: 100%;
+  height: 300px;
+  border: 1px;
+  border-color: black;
+  border-style: solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+}
+
 .transcript-container {
   display: flex;
 }
@@ -71,6 +83,7 @@ video {
   border-radius: 50px;
   display: block;
   margin: 0 auto;
+  object-fit: cover;
 }
 
 .main-body-container {

@@ -1,22 +1,30 @@
-import React, { useRef, useState } from "react";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
+import React, { useState, useMemo } from "react";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import { TextField } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { useHistory } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext";
-import axios from "axios";
-import Typography from "@material-ui/core/Typography";
 import { Spinner } from "./lib";
+import axios from "axios";
+import "./ManageEmailAccessList.css";
 
-import { useDispatch } from "react-redux";
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
-import { setUser } from "../store/userSlice";
-
-export default function LoginModal() {
+export default function ManageEmailAccessList() {
   const [open, setOpen] = React.useState(false);
   const { login, token } = useAuth();
   const history = useHistory();
@@ -28,6 +36,17 @@ export default function LoginModal() {
   const isLoading = status === "loading";
   const isSuccess = status === "success";
 
+  const bearerToken = `Bearer ${token}`;
+
+  const config = useMemo(() => {
+    return {
+      headers: {
+        Authorization: bearerToken,
+        "Content-Type": "application/json",
+      },
+    };
+  }, [bearerToken]);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -37,7 +56,7 @@ export default function LoginModal() {
     setOpen(false);
   };
 
-  async function handleLogin(e) {
+  async function handleAddEmail(e) {
     e.preventDefault();
     setStatus("loading");
 
@@ -45,9 +64,21 @@ export default function LoginModal() {
       setError();
       setStatus("loading");
 
-      await login(email, password);
+      axios
+        .post(
+          `${process.env.REACT_APP_BASE_URL}/user/addEmailToAccessList`,
+          { email: email },
+          config
+        )
+        .then(() => {
+          console.log("email added");
+          //   getUser();
 
-      history.push("/fetching");
+          // handleButtonClick(videoNum);
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
     } catch (err) {
       console.log(err.message);
       setError(err.message);
@@ -55,34 +86,25 @@ export default function LoginModal() {
     }
     setStatus("success");
   }
-
   return (
-    <div>
+    <div className="manage-email-access-list-container">
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Login
+        Manage Email Access List
       </Button>
       <Dialog
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Login</DialogTitle>
+        <DialogTitle id="form-dialog-title">Email Access List</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
             margin="dense"
             id="email"
-            label="Email Address"
+            label="Add Email Address"
             type="email"
             onChange={(e) => setEmail(e.target.value)}
-            fullWidth
-          />
-          <TextField
-            margin="dense"
-            id="password"
-            label="Password"
-            type="password"
-            onChange={(e) => setPassword(e.target.value)}
             fullWidth
           />
         </DialogContent>
@@ -92,14 +114,11 @@ export default function LoginModal() {
           </Typography>
         )}
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
           {isLoading ? (
             <Spinner />
           ) : (
-            <Button onClick={handleLogin} color="primary">
-              Login
+            <Button onClick={handleAddEmail} color="primary">
+              Add Email
             </Button>
           )}
         </DialogActions>

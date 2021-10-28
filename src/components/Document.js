@@ -6,10 +6,10 @@ import { motion } from "framer-motion";
 import "./Todo.css";
 import axios from "axios";
 import { useAuth } from "../contexts/AuthContext";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { deleteTodoAction } from "../store/userSlice";
 
-export default function Todo({ todo }) {
+export default function Document({ doc }) {
   const { token } = useAuth();
 
   const dispatch = useDispatch();
@@ -20,29 +20,29 @@ export default function Todo({ todo }) {
     return {
       headers: {
         Authorization: bearerToken,
-        "Content-Type": "multipart/form-data",
+        "Content-Type": "application/json",
       },
     };
   }, [bearerToken]);
   const deleteTodo = () => {
     console.log("delete triggered");
+    console.log(doc);
     axios
-      .delete(`${process.env.REACT_APP_BASE_URL}/todo/${todo.todoId}`, config)
+      .post(
+        `${process.env.REACT_APP_BASE_URL}/user/removeDocument`,
+        { document: doc },
+        config
+      )
       .then(() => {
-        console.log("todo deleted");
-
-        // getUser();
+        dispatch(deleteTodoAction({ doc }));
       })
       .catch((err) => {
-        console.log("Todo delete failed");
-        console.log(err);
         console.log(err.message);
       });
-    dispatch(deleteTodoAction({ todo }));
   };
   return (
     <div className="todo-container">
-      <p className="link">{todo.body}</p>
+      <p className="link">{doc}</p>
 
       <motion.div>
         <HighlightOffRoundedIcon

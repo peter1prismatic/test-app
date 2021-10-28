@@ -19,13 +19,19 @@ export function AuthProvider({ children }) {
   function login(email, password) {
     console.log("login attempt");
     return auth.signInWithEmailAndPassword(email, password);
-    // .then((data) => {
-    //   data.user.getIdToken().then(function (idToken) {
-    //     console.log("23");
-    //     setToken(idToken);
-    //     console.log("25");
-    //   });
-    // });
+  }
+
+  function signInAnonymously() {
+    return auth
+      .signInAnonymously()
+      .then(() => {
+        console.log("signed in anonymously");
+      })
+      .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.log(error);
+      });
   }
 
   function logout() {
@@ -46,20 +52,12 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      console.log("User:");
-      console.log(user);
       setCurrentUser(user);
 
       if (user) {
-        // console.log(user);
-        // console.log(user.getIdToken());
         user.getIdToken().then(function (idToken) {
-          console.log("token:");
-          console.log(idToken);
           setToken(idToken);
         });
-
-        // console.log(token);
       } else {
         setToken(null);
       }
@@ -84,6 +82,7 @@ export function AuthProvider({ children }) {
     token,
     login,
     signup,
+    signInAnonymously,
     logout,
     resetPassword,
     updateEmail,
