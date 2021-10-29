@@ -14,5 +14,8 @@ import "firebase/auth";
 
 const app = firebase.initializeApp(firebaseConfig);
 
+console.log("api key: ");
+console.log(firebaseConfig.apiKey);
+
 export const auth = app.auth();
 export default app;
