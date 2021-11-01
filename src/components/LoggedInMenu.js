@@ -20,17 +20,13 @@ export const LoggedInMenu = () => {
 
   return (
     <div className="menu-5">
-      {!currentUser.isAnonymous && (
-        <>
-          <Link to="/discover" className="login-link">
-            <button className="login-btn">Discover</button>
-          </Link>
-          <Link to="/my-profile" className="login-link">
-            <button className="login-btn">My Profile</button>
-          </Link>
-        </>
-      )}
-
+      <Link to="/discover" className="login-link">
+        <button className="login-btn">Discover</button>
+      </Link>
+      <Link to="/my-profile" className="login-link">
+        <button className="login-btn">My Profile</button>
+      </Link>
+      )
       <div
         className="logged-in-div"
         css={{
@@ -44,9 +40,7 @@ export const LoggedInMenu = () => {
       >
         <span style={{ padding: "10px" }}>{currentUser.email}</span>
 
-        {!currentUser.isAnonymous && (
-          <Button onClick={handleLogout}>Logout</Button>
-        )}
+        <Button onClick={handleLogout}>Logout</Button>
       </div>
     </div>
   );
